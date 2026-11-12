@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import { caps } from '../caps';
 import { LATIN_PREFIXES } from '../../../shared/config/alphabet';
 import { LIMITS } from '../../../shared/config/gameDefaults';
 import { latinToGeorgian } from '../../../shared/keyboard';
@@ -56,7 +57,7 @@ export function Writing({ state }: { state: RoomState }) {
   return (
     <div className="space-y-3">
       <div className="card sticky top-2 z-10 flex items-center gap-3 py-3">
-        <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl bg-fuchsia-600 text-5xl font-extrabold leading-none text-white shadow-lg">
+        <div className="tile h-16 w-16 text-5xl">
           {letter}
         </div>
         <div className="min-w-0 flex-1 text-sm font-semibold leading-tight text-violet-700">
@@ -128,7 +129,7 @@ export function Writing({ state }: { state: RoomState }) {
             })}
           </div>
 
-          <label className="flex cursor-pointer items-center gap-3 rounded-2xl bg-white/20 px-4 py-3 text-sm font-semibold text-white backdrop-blur">
+          <label className="flex cursor-pointer items-center gap-3 rounded-leaf bg-violet-950/80 px-4 py-3 text-sm font-semibold text-white backdrop-blur">
             <input
               type="checkbox"
               className="h-5 w-5 accent-amber-400"
@@ -143,7 +144,7 @@ export function Writing({ state }: { state: RoomState }) {
 
           <div className="sticky bottom-3">
             <button className="btn-danger w-full text-xl shadow-2xl" disabled={!allFilled || !!round.stopBy} onClick={stop}>
-              {round.stopBy ? 'ბოლო წამები…' : allFilled ? '✋ სტოპ!' : 'სტოპ! — შეავსე ყველა ველი'}
+              {caps(round.stopBy ? 'ბოლო წამები…' : allFilled ? '✋ სტოპ!' : 'შეავსე ყველა ველი')}
             </button>
           </div>
         </>

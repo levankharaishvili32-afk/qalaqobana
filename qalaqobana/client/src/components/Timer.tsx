@@ -17,7 +17,7 @@ export function Timer({ endsAt, warnSound = false }: { endsAt: number | null; wa
   return (
     <div
       role="timer"
-      className={`rounded-2xl px-3 py-1.5 text-center font-mono text-2xl font-extrabold tabular-nums ${
+      className={`rounded-leaf px-3 py-1.5 text-center font-mono text-2xl font-extrabold tabular-nums ${
         urgent ? 'animate-shake bg-rose-500 text-white' : 'bg-violet-100 text-violet-900'
       }`}
     >

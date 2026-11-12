@@ -1,4 +1,5 @@
 import { POINTS } from '../../../shared/scoring';
+import { caps } from '../caps';
 import type { RoomState } from '../../../shared/types';
 import { AnswersTable, pointsClass } from '../components/AnswersTable';
 import { Leaderboard } from '../components/Leaderboard';
@@ -14,7 +15,7 @@ export function Scores({ state }: { state: RoomState }) {
   return (
     <div className="space-y-3">
       <div className="card flex items-center gap-3 py-3">
-        <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-fuchsia-600 text-4xl font-extrabold leading-none text-white">
+        <div className="tile h-14 w-14 text-4xl">
           {round.letter}
         </div>
         <div className="min-w-0 flex-1">
@@ -38,7 +39,7 @@ export function Scores({ state }: { state: RoomState }) {
       </div>
 
       <div className="card">
-        <h2 className="mb-2 text-lg font-extrabold">ჯამური ცხრილი</h2>
+        <h2 className="mb-2 text-lg font-extrabold">{caps('ჯამური ცხრილი')}</h2>
         <Leaderboard state={state} showRound />
       </div>
 
@@ -64,11 +65,11 @@ export function Scores({ state }: { state: RoomState }) {
           </div>
         ) : isHost ? (
           <button className="btn-primary w-full text-lg shadow-2xl" onClick={() => send('host:next')}>
-            {isLast ? '🏁 საბოლოო შედეგები' : '➡️ შემდეგი რაუნდი'}
+            {caps(isLast ? '🏁 საბოლოო შედეგები' : '➡️ შემდეგი რაუნდი')}
             {left > 0 && <span className="font-semibold opacity-70">({left})</span>}
           </button>
         ) : (
-          <div className="rounded-2xl bg-violet-950/80 px-4 py-3 text-center font-bold text-white backdrop-blur">
+          <div className="bar">
             {isLast ? 'საბოლოო შედეგები' : 'შემდეგი რაუნდი'} {left > 0 ? `${left} წამში…` : 'მალე…'}
           </div>
         )}

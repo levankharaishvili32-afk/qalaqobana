@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { caps } from '../caps';
 import type { RoomState } from '../../../shared/types';
 import { AnswersTable, type CellRef } from '../components/AnswersTable';
 import { Timer } from '../components/Timer';
@@ -46,11 +47,11 @@ export function Review({ state }: { state: RoomState }) {
   return (
     <div className="space-y-3">
       <div className="card flex items-center gap-3 py-3">
-        <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-fuchsia-600 text-4xl font-extrabold leading-none text-white">
+        <div className="tile h-14 w-14 text-4xl">
           {round.letter}
         </div>
         <div className="min-w-0 flex-1">
-          <div className="font-extrabold">შემოწმება</div>
+          <div className="font-extrabold">{caps('შემოწმება')}</div>
           <div className="text-xs font-semibold leading-tight text-violet-600">
             {isHost
               ? 'დააჭირე პასუხს: მონიშნე არასწორად, გადაფარე ან გააერთიანე'
@@ -61,7 +62,7 @@ export function Review({ state }: { state: RoomState }) {
       </div>
 
       {mergeFrom && (
-        <div className="flex items-center justify-between gap-2 rounded-2xl bg-amber-300 px-4 py-3 text-sm font-bold text-violet-950 shadow-lg">
+        <div className="flex items-center justify-between gap-2 rounded-leaf bg-amber-300 px-4 py-3 text-sm font-bold text-violet-950 shadow-lg">
           <span>🔗 აირჩიე მეორე პასუხი იმავე სვეტში</span>
           <button className="rounded-full bg-white/70 px-3 py-1" onClick={() => setMergeFrom(null)}>
             გაუქმება
@@ -85,7 +86,7 @@ export function Review({ state }: { state: RoomState }) {
           disabled={iAmReady}
           onClick={() => send('review:ready')}
         >
-          {iAmReady ? `✓ მზად ხარ — ველოდებით დანარჩენებს (${readyCount}/${online.length})` : `მზად ვარ (${readyCount}/${online.length})`}
+          {iAmReady ? `✓ მზად ხარ — ველოდებით დანარჩენებს (${readyCount}/${online.length})` : caps(`მზად ვარ (${readyCount}/${online.length})`)}
         </button>
       </div>
 

@@ -8,20 +8,22 @@ body,
   min-height: 100%;
 }
 
+/* ფონი: ბრენდის მუქი იისფერი + ფერადი შტრიხების პატერნი */
 body {
-  font-family: 'Noto Sans Georgian', system-ui, sans-serif;
-  color: #2e1065;
-  background-color: #7c3aed;
-  background-image:
-    radial-gradient(circle at 12% 18%, rgba(253, 224, 71, 0.35) 0 6px, transparent 7px),
-    radial-gradient(circle at 82% 12%, rgba(255, 255, 255, 0.3) 0 5px, transparent 6px),
-    radial-gradient(circle at 68% 78%, rgba(253, 224, 71, 0.3) 0 7px, transparent 8px),
-    radial-gradient(circle at 22% 88%, rgba(255, 255, 255, 0.25) 0 5px, transparent 6px),
-    radial-gradient(circle at 45% 45%, rgba(251, 146, 60, 0.3) 0 4px, transparent 5px),
-    linear-gradient(135deg, #6d28d9 0%, #c026d3 55%, #f97316 100%);
-  background-size: 340px 340px, 280px 280px, 400px 400px, 320px 320px, 220px 220px, cover;
+  font-family: FiraGO, 'Noto Sans Georgian', Ubuntu, system-ui, sans-serif;
+  color: #3c2956;
+  background-color: #3c2956;
+  background-image: url('/pattern.svg');
+  background-size: 360px 240px;
   background-attachment: fixed;
   -webkit-tap-highlight-color: transparent;
+}
+
+/* სათაურები მთავრულით, როგორც ბრენდის მასალებში */
+h1,
+h2 {
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
 }
 
 /* ტელეფონზე ველში შესვლისას ეკრანი რომ არ "გადიდდეს" */
@@ -33,40 +35,49 @@ textarea {
 
 @layer components {
   .card {
-    @apply rounded-3xl bg-white/95 p-4 shadow-xl shadow-violet-950/20 sm:p-5;
+    @apply rounded-leaf-lg bg-white p-4 shadow-xl shadow-black/30 sm:p-5;
   }
   .btn {
-    @apply inline-flex select-none items-center justify-center gap-2 rounded-2xl px-4 py-3 text-base font-extrabold transition active:translate-y-0.5 disabled:cursor-not-allowed disabled:border-slate-300 disabled:bg-slate-200 disabled:text-slate-500 disabled:active:translate-y-0;
+    @apply inline-flex select-none items-center justify-center gap-2 rounded-leaf px-4 py-3 text-base font-extrabold uppercase tracking-wide transition active:translate-y-0.5 active:brightness-95 disabled:cursor-not-allowed disabled:bg-none disabled:bg-slate-200 disabled:text-slate-500 disabled:active:translate-y-0;
   }
+  /* მთავარი მოქმედება: წითელი → ნარინჯისფერი გრადიენტი */
   .btn-primary {
-    @apply btn border-b-4 border-amber-600 bg-amber-400 text-violet-950 hover:bg-amber-300;
+    @apply btn bg-brand-warm text-white shadow-lg shadow-amber-600/30 hover:brightness-110;
   }
   .btn-violet {
-    @apply btn border-b-4 border-violet-900 bg-violet-600 text-white hover:bg-violet-500;
+    @apply btn bg-violet-600 text-white hover:bg-violet-500;
   }
   .btn-ghost {
     @apply btn bg-violet-100 text-violet-900 hover:bg-violet-200;
   }
+  /* "სტოპ!": იისფერი → წითელი გრადიენტი */
   .btn-danger {
-    @apply btn border-b-4 border-rose-800 bg-rose-500 text-white hover:bg-rose-400;
+    @apply btn bg-brand-hot text-white shadow-lg shadow-fuchsia-900/30 hover:brightness-110;
   }
   .field {
-    @apply w-full rounded-2xl border-2 border-violet-200 bg-white px-4 py-3 font-semibold text-violet-950 outline-none transition placeholder:font-normal placeholder:text-violet-300 focus:border-fuchsia-500;
+    @apply w-full rounded-leaf-sm border-2 border-violet-200 bg-white px-4 py-3 font-semibold text-violet-950 outline-none transition placeholder:font-normal placeholder:text-violet-300 focus:border-amber-400;
   }
   .label {
     @apply mb-1 block text-sm font-semibold text-violet-700;
   }
   .chip {
-    @apply inline-flex items-center gap-1 rounded-full px-3 py-1.5 text-sm font-semibold transition;
+    @apply inline-flex items-center gap-1 rounded-leaf-sm px-3 py-1.5 text-sm font-semibold transition;
+  }
+  /* ასოს ფილა: სრული გრადიენტი "ფოთლის" ფორმაში */
+  .tile {
+    @apply flex shrink-0 items-center justify-center rounded-leaf bg-brand-full font-extrabold leading-none text-white shadow-lg;
+  }
+  /* მუქი ზოლი ეკრანის ბოლოში (ლოდინის შეტყობინებები) */
+  .bar {
+    @apply rounded-leaf bg-violet-950/90 px-4 py-3 text-center font-bold text-white backdrop-blur;
   }
 }
 
 .confetti {
   position: fixed;
   top: 0;
-  width: 10px;
-  height: 14px;
-  border-radius: 2px;
+  width: 14px;
+  height: 6px;
   pointer-events: none;
   z-index: 40;
 }

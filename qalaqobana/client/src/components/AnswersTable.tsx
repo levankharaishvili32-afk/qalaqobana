@@ -45,7 +45,7 @@ export function AnswersTable(props: {
     .filter((p): p is NonNullable<typeof p> => !!p && !!table[p.id]);
 
   return (
-    <div className="-mx-1 overflow-x-auto rounded-2xl border-2 border-violet-100">
+    <div className="-mx-1 overflow-x-auto rounded-leaf border-2 border-violet-100">
       <table className="w-full border-separate border-spacing-0 text-sm">
         <thead>
           <tr>

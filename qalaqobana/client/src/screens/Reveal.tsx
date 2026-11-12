@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import { caps } from '../caps';
 import { ALPHABET } from '../../../shared/config/alphabet';
 import type { RoomState } from '../../../shared/types';
 import { useSecondsLeft } from '../socket';
@@ -37,12 +38,13 @@ export function Reveal({ state }: { state: RoomState }) {
       <div className="text-lg font-bold text-white/90">
         რაუნდი {state.round?.number} / {state.round?.total}
       </div>
-      <div className="mt-1 text-2xl font-extrabold drop-shadow">{letter ? 'ასოა…' : 'ვირჩევთ ასოს…'}</div>
+      <div className="mt-1 text-2xl font-extrabold drop-shadow">{caps(letter ? 'ასოა…' : 'ვირჩევთ ასოს…')}</div>
 
       <div
         key={letter ?? 'spin'}
-        className={`mt-8 flex h-56 w-56 items-center justify-center rounded-[3rem] bg-white text-[9rem] font-extrabold leading-none shadow-2xl ${
-          letter ? 'animate-pop text-fuchsia-600 ring-8 ring-amber-300' : 'text-violet-300'
+        style={{ borderRadius: '1.25rem 4.5rem 1.25rem 4.5rem' }}
+        className={`mt-8 flex h-56 w-56 items-center justify-center text-[9rem] font-extrabold leading-none shadow-2xl ${
+          letter ? 'animate-pop bg-brand-full text-white' : 'bg-white text-violet-300'
         }`}
         aria-live="polite"
       >

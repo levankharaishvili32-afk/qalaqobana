@@ -83,7 +83,7 @@ export default function App() {
       </header>
 
       {!connected && (
-        <div className="mb-3 rounded-2xl bg-rose-600 px-4 py-2 text-center text-sm font-bold text-white shadow-lg">
+        <div className="mb-3 rounded-leaf bg-rose-600 px-4 py-2 text-center text-sm font-bold text-white shadow-lg">
           კავშირი გაწყდა — ვცდილობ აღდგენას…
         </div>
       )}
@@ -92,7 +92,7 @@ export default function App() {
 
       {toast && (
         <div className="fixed inset-x-0 bottom-5 z-50 flex justify-center px-4">
-          <div className="animate-rise rounded-2xl bg-violet-950 px-4 py-3 text-center text-sm font-bold text-white shadow-2xl">
+          <div className="animate-rise rounded-leaf bg-violet-950 px-4 py-3 text-center text-sm font-bold text-white shadow-2xl">
             {toast}
           </div>
         </div>

@@ -1,4 +1,5 @@
 import { useState, type FormEvent } from 'react';
+import { caps } from '../caps';
 import { ALPHABET, DEFAULT_LETTERS, HARD_LETTERS } from '../../../shared/config/alphabet';
 import { CATEGORIES } from '../../../shared/config/categories';
 import { LIMITS } from '../../../shared/config/gameDefaults';
@@ -106,13 +107,13 @@ export function Lobby({ state }: { state: RoomState }) {
           {state.hasPassword ? '🔒 ოთახს პაროლი აქვს' : 'გაუზიარე მეგობრებს კოდი ან ლინკი'}
         </div>
         <button onClick={share} className="btn-violet mt-3 w-full">
-          🔗 ლინკის გაზიარება
+          {caps('🔗 ლინკის გაზიარება')}
         </button>
       </div>
 
       <div className="card">
         <div className="mb-2 flex items-baseline justify-between">
-          <h2 className="text-lg font-extrabold">მოთამაშეები</h2>
+          <h2 className="text-lg font-extrabold">{caps('მოთამაშეები')}</h2>
           <span className="font-extrabold text-fuchsia-600">
             {state.players.length} / {s.maxPlayers}
           </span>
@@ -122,7 +123,7 @@ export function Lobby({ state }: { state: RoomState }) {
 
       <div className="card space-y-5">
         <div className="flex items-baseline justify-between">
-          <h2 className="text-lg font-extrabold">პარამეტრები</h2>
+          <h2 className="text-lg font-extrabold">{caps('პარამეტრები')}</h2>
           {!isHost && <span className="text-xs font-semibold text-violet-500">ცვლის მხოლოდ ჰოსტი</span>}
         </div>
 
@@ -230,10 +231,10 @@ export function Lobby({ state }: { state: RoomState }) {
                   onClick={() => toggleLetter(l)}
                   aria-pressed={on}
                   aria-label={`ასო ${l}`}
-                  className={`aspect-square rounded-xl text-lg font-extrabold transition ${
+                  className={`aspect-square rounded-leaf-sm text-lg font-extrabold transition ${
                     on
                       ? HARD_LETTERS.includes(l)
-                        ? 'bg-orange-400 text-white'
+                        ? 'bg-amber-400 text-white'
                         : 'bg-violet-600 text-white'
                       : 'bg-violet-100 text-violet-300'
                   }`}
@@ -253,10 +254,10 @@ export function Lobby({ state }: { state: RoomState }) {
             disabled={missing > 0}
             onClick={() => send('host:start')}
           >
-            {missing > 0 ? `დაიწყე — აკლია ${missing} მოთამაშე` : '🚀 დაიწყე'}
+            {caps(missing > 0 ? `დაიწყე — აკლია ${missing} მოთამაშე` : '🚀 დაიწყე')}
           </button>
         ) : (
-          <div className="rounded-2xl bg-violet-950/80 px-4 py-3 text-center font-bold text-white backdrop-blur">
+          <div className="bar">
             {missing > 0 ? `აკლია ${missing} მოთამაშე` : 'ველოდებით, სანამ ჰოსტი თამაშს დაიწყებს…'}
           </div>
         )}

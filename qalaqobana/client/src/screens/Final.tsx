@@ -1,10 +1,11 @@
 import { useEffect, useMemo } from 'react';
+import { caps } from '../caps';
 import type { RoomState } from '../../../shared/types';
 import { Leaderboard } from '../components/Leaderboard';
 import { send } from '../socket';
 import { sounds } from '../sounds';
 
-const CONFETTI_COLORS = ['#fbbf24', '#f472b6', '#34d399', '#60a5fa', '#ffffff', '#fb923c'];
+const CONFETTI_COLORS = ['#f9901b', '#eb1c24', '#f15a24', '#92278f', '#ffffff', '#2dd5c4'];
 
 function Confetti() {
   const pieces = useMemo(
@@ -50,7 +51,7 @@ export function Final({ state }: { state: RoomState }) {
       <div className="card text-center">
         <div className="animate-pop text-7xl leading-tight">🏆</div>
         <div className="mt-3 text-sm font-bold text-violet-600">
-          {winners.length > 1 ? 'ფრე! გამარჯვება იყოფა' : 'გამარჯვებული'}
+          {caps(winners.length > 1 ? 'ფრე! გამარჯვება იყოფა' : 'გამარჯვებული')}
         </div>
         <div className="break-words text-3xl font-extrabold text-fuchsia-600">
           {winners.map((w) => w.name).join(' და ') || '—'}
@@ -60,17 +61,17 @@ export function Final({ state }: { state: RoomState }) {
       </div>
 
       <div className="card">
-        <h2 className="mb-2 text-lg font-extrabold">საბოლოო ცხრილი</h2>
+        <h2 className="mb-2 text-lg font-extrabold">{caps('საბოლოო ცხრილი')}</h2>
         <Leaderboard state={state} />
       </div>
 
       <div className="sticky bottom-3">
         {isHost ? (
           <button className="btn-primary w-full text-lg shadow-2xl" onClick={() => send('host:newGame')}>
-            🔄 ახალი თამაში
+            {caps('🔄 ახალი თამაში')}
           </button>
         ) : (
-          <div className="rounded-2xl bg-violet-950/80 px-4 py-3 text-center font-bold text-white backdrop-blur">
+          <div className="bar">
             ჰოსტს შეუძლია ახალი თამაშის დაწყება იმავე ოთახში
           </div>
         )}

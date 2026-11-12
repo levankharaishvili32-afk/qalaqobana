@@ -1,4 +1,5 @@
 import { useEffect, useState, type FormEvent } from 'react';
+import { caps } from '../caps';
 import { LIMITS } from '../../../shared/config/gameDefaults';
 import { clearNotice, createRoom, joinRoom, roomInfo, storage, urlCode, useStore } from '../socket';
 
@@ -46,18 +47,24 @@ export function Home() {
   return (
     <div className="mx-auto max-w-md">
       <div className="mb-5 mt-4 text-center text-white">
-        <h1 className="text-4xl font-extrabold drop-shadow-lg sm:text-5xl">ქალაქობანა</h1>
+        <div className="mx-auto mb-3 flex w-40 items-center justify-center gap-1.5" aria-hidden>
+          <span className="h-1.5 w-6 bg-brand-orange" />
+          <span className="h-1.5 w-10 bg-brand-red" />
+          <span className="h-1.5 w-4 bg-brand-magenta" />
+          <span className="h-1.5 w-8 bg-violet-500" />
+        </div>
+        <h1 className="text-4xl font-extrabold tracking-wide sm:text-5xl">{caps('ქალაქობანა')}</h1>
         <p className="mt-2 font-semibold text-white/90">ითამაშე მეგობრებთან ერთად, ონლაინ 🎉</p>
       </div>
 
       {notice && (
-        <div className="mb-3 rounded-2xl bg-amber-300 px-4 py-3 text-center font-bold text-violet-950 shadow-lg">
+        <div className="mb-3 rounded-leaf bg-amber-300 px-4 py-3 text-center font-bold text-violet-950 shadow-lg">
           {notice}
         </div>
       )}
 
       <div className="card">
-        <div className="mb-4 grid grid-cols-2 gap-2 rounded-2xl bg-violet-100 p-1">
+        <div className="mb-4 grid grid-cols-2 gap-2 rounded-leaf bg-violet-100 p-1">
           {(['create', 'join'] as const).map((t) => (
             <button
               key={t}
@@ -66,18 +73,18 @@ export function Home() {
                 setTab(t);
                 setError(null);
               }}
-              className={`rounded-xl py-2.5 text-sm font-extrabold transition ${
-                tab === t ? 'bg-white text-fuchsia-600 shadow' : 'text-violet-500'
+              className={`rounded-leaf-sm py-2.5 text-sm font-extrabold transition ${
+                tab === t ? 'bg-violet-600 text-white shadow' : 'text-violet-600'
               }`}
             >
-              {t === 'create' ? 'ოთახის შექმნა' : 'შესვლა კოდით'}
+              {caps(t === 'create' ? 'ოთახის შექმნა' : 'შესვლა კოდით')}
             </button>
           ))}
         </div>
 
         <form onSubmit={submit} className="space-y-3">
           {tab === 'join' && linkRoom && code.toUpperCase() === linkCode && (
-            <div className="rounded-2xl bg-fuchsia-50 px-4 py-3 text-center">
+            <div className="rounded-leaf bg-fuchsia-50 px-4 py-3 text-center">
               <div className="text-xs font-semibold text-fuchsia-600">გეპატიჟებიან ოთახში</div>
               <div className="text-lg font-extrabold">{linkRoom.name}</div>
             </div>
@@ -147,16 +154,16 @@ export function Home() {
           )}
 
           {error && (
-            <div className="rounded-2xl bg-rose-100 px-4 py-2 text-sm font-bold text-rose-700">{error}</div>
+            <div className="rounded-leaf bg-rose-100 px-4 py-2 text-sm font-bold text-rose-700">{error}</div>
           )}
 
           <button className="btn-primary w-full text-lg" disabled={busy || !connected}>
-            {!connected ? 'ვუკავშირდები…' : tab === 'create' ? 'ოთახის შექმნა' : 'შესვლა'}
+            {caps(!connected ? 'ვუკავშირდები…' : tab === 'create' ? 'ოთახის შექმნა' : 'შესვლა')}
           </button>
         </form>
       </div>
 
-      <div className="mt-4 rounded-3xl bg-white/15 p-4 text-sm font-semibold leading-relaxed text-white backdrop-blur">
+      <div className="mt-4 rounded-leaf-lg bg-violet-950/80 p-4 text-sm font-semibold leading-relaxed text-white backdrop-blur">
         <div className="mb-1 font-extrabold">როგორ ვითამაშოთ?</div>
         ყოველ რაუნდში ირჩევა შემთხვევითი ასო. ჩაწერე ამ ასოზე დაწყებული სიტყვა თითოეულ კატეგორიაში. რაც
         უფრო იშვიათია შენი პასუხი, მით მეტი ქულა: 20 — მხოლოდ შენ გაქვს პასუხი, 10 — უნიკალური, 5 —

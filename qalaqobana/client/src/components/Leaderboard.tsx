@@ -17,7 +17,7 @@ export function Leaderboard({ state, showRound = false }: { state: RoomState; sh
         return (
           <li
             key={p.id}
-            className={`flex items-center gap-3 rounded-2xl px-3 py-2 ${
+            className={`flex items-center gap-3 rounded-leaf px-3 py-2 ${
               p.id === state.youId ? 'bg-amber-100' : 'bg-violet-50'
             } ${p.online ? '' : 'opacity-60'}`}
           >
