@@ -1,0 +1,79 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html,
+body,
+#root {
+  min-height: 100%;
+}
+
+body {
+  font-family: 'Noto Sans Georgian', system-ui, sans-serif;
+  color: #2e1065;
+  background-color: #7c3aed;
+  background-image:
+    radial-gradient(circle at 12% 18%, rgba(253, 224, 71, 0.35) 0 6px, transparent 7px),
+    radial-gradient(circle at 82% 12%, rgba(255, 255, 255, 0.3) 0 5px, transparent 6px),
+    radial-gradient(circle at 68% 78%, rgba(253, 224, 71, 0.3) 0 7px, transparent 8px),
+    radial-gradient(circle at 22% 88%, rgba(255, 255, 255, 0.25) 0 5px, transparent 6px),
+    radial-gradient(circle at 45% 45%, rgba(251, 146, 60, 0.3) 0 4px, transparent 5px),
+    linear-gradient(135deg, #6d28d9 0%, #c026d3 55%, #f97316 100%);
+  background-size: 340px 340px, 280px 280px, 400px 400px, 320px 320px, 220px 220px, cover;
+  background-attachment: fixed;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* ტელეფონზე ველში შესვლისას ეკრანი რომ არ "გადიდდეს" */
+input,
+select,
+textarea {
+  font-size: 16px;
+}
+
+@layer components {
+  .card {
+    @apply rounded-3xl bg-white/95 p-4 shadow-xl shadow-violet-950/20 sm:p-5;
+  }
+  .btn {
+    @apply inline-flex select-none items-center justify-center gap-2 rounded-2xl px-4 py-3 text-base font-extrabold transition active:translate-y-0.5 disabled:cursor-not-allowed disabled:border-slate-300 disabled:bg-slate-200 disabled:text-slate-500 disabled:active:translate-y-0;
+  }
+  .btn-primary {
+    @apply btn border-b-4 border-amber-600 bg-amber-400 text-violet-950 hover:bg-amber-300;
+  }
+  .btn-violet {
+    @apply btn border-b-4 border-violet-900 bg-violet-600 text-white hover:bg-violet-500;
+  }
+  .btn-ghost {
+    @apply btn bg-violet-100 text-violet-900 hover:bg-violet-200;
+  }
+  .btn-danger {
+    @apply btn border-b-4 border-rose-800 bg-rose-500 text-white hover:bg-rose-400;
+  }
+  .field {
+    @apply w-full rounded-2xl border-2 border-violet-200 bg-white px-4 py-3 font-semibold text-violet-950 outline-none transition placeholder:font-normal placeholder:text-violet-300 focus:border-fuchsia-500;
+  }
+  .label {
+    @apply mb-1 block text-sm font-semibold text-violet-700;
+  }
+  .chip {
+    @apply inline-flex items-center gap-1 rounded-full px-3 py-1.5 text-sm font-semibold transition;
+  }
+}
+
+.confetti {
+  position: fixed;
+  top: 0;
+  width: 10px;
+  height: 14px;
+  border-radius: 2px;
+  pointer-events: none;
+  z-index: 40;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
