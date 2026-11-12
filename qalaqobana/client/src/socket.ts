@@ -8,7 +8,7 @@ import type { CreatePayload, JoinAck, JoinPayload, RoomState } from '../../share
  */
 export const socket = io(
   __ON_VERCEL__
-    ? { path: '/api/server/socket.io', transports: ['websocket'] }
+    ? { path: '/api/server', addTrailingSlash: false, transports: ['websocket'] }
     : { transports: ['websocket', 'polling'] },
 );
 

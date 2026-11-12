@@ -21,14 +21,22 @@ export function createApp(options: AppOptions = {}) {
   const app = express();
   const server = http.createServer(app);
 
-  // თუ მოთხოვნა პრეფიქსით მოდის, ვაშორებთ, რომ დანარჩენი კოდი ყველგან ერთნაირად მუშაობდეს.
+  // Vercel ფუნქციას მხოლოდ ზუსტ მისამართზე (/api/server) იძახებს, ქვემისამართებზე — არა.
+  // ამიტომ იქ ყველაფერი ერთ მისამართზე მოდის და მოთხოვნის ტიპს query-ით ვარჩევთ:
+  //   /api/server?EIO=4&transport=websocket  → Socket.IO
+  //   /api/server?healthz                    → სერვერის შემოწმება
   // ეს listener-ები Socket.IO-ზე ადრე უნდა დარეგისტრირდეს.
   const prefix = options.pathPrefix;
   if (prefix) {
     const strip = (req: http.IncomingMessage) => {
-      if (req.url === prefix) req.url = '/';
-      else if (req.url?.startsWith(`${prefix}/`) || req.url?.startsWith(`${prefix}?`))
-        req.url = req.url.slice(prefix.length) || '/';
+      const url = req.url ?? '/';
+      const q = url.indexOf('?');
+      const search = q >= 0 ? url.slice(q) : '';
+      if (/[?&]EIO=/.test(search)) req.url = `/socket.io/${search}`;
+      else if (/[?&]healthz\b/.test(search)) req.url = '/healthz';
+      else if (url === prefix) req.url = '/';
+      else if (url.startsWith(`${prefix}/`) || url.startsWith(`${prefix}?`))
+        req.url = url.slice(prefix.length) || '/';
     };
     server.prependListener('request', strip);
     server.prependListener('upgrade', strip);
