@@ -1,0 +1,11 @@
+# Render-ის პარამეტრები (Blueprint).
+# Render-ზე: New → Blueprint → აირჩიეთ ეს რეპოზიტორია → Apply.
+services:
+  - type: web
+    name: qalaqobana
+    runtime: node
+    rootDir: qalaqobana
+    plan: free
+    buildCommand: npm install && npm run build
+    startCommand: npm start
+    healthCheckPath: /healthz
