@@ -1,4 +1,4 @@
-import { LATIN_PREFIXES } from './config/alphabet';
+import { LATIN_PREFIXES } from './config/alphabet.js';
 
 /** რასაც მოთამაშეები ხედავენ: მოჭრილი, ზედმეტი ჰარების გარეშე */
 export function cleanDisplay(raw: string): string {

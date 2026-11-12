@@ -6,6 +6,10 @@ import autoprefixer from 'autoprefixer';
 export default defineConfig({
   root: 'client',
   plugins: [react()],
+  define: {
+    // Vercel აწყობისას თავად აყენებს VERCEL=1 ცვლადს
+    __ON_VERCEL__: JSON.stringify(!!process.env.VERCEL),
+  },
   css: {
     postcss: {
       plugins: [tailwindcss({ config: './tailwind.config.js' }), autoprefixer()],

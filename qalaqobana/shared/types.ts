@@ -1,5 +1,5 @@
-import type { Category } from './config/categories';
-import type { AutoCheck, ScoreReason } from './scoring';
+import type { Category } from './config/categories.js';
+import type { AutoCheck, ScoreReason } from './scoring.js';
 
 export type Phase = 'lobby' | 'reveal' | 'writing' | 'review' | 'scores' | 'final';
 

@@ -1,17 +1,17 @@
 import crypto from 'node:crypto';
-import { ALPHABET, DEFAULT_LETTERS } from '../shared/config/alphabet';
-import { CATEGORIES, CUSTOM_CATEGORY_ICON, type Category } from '../shared/config/categories';
-import { LIMITS, TIMING } from '../shared/config/gameDefaults';
-import { cleanDisplay, normalizeAnswer } from '../shared/normalize';
+import { ALPHABET, DEFAULT_LETTERS } from '../shared/config/alphabet.js';
+import { CATEGORIES, CUSTOM_CATEGORY_ICON, type Category } from '../shared/config/categories.js';
+import { LIMITS, TIMING } from '../shared/config/gameDefaults.js';
+import { cleanDisplay, normalizeAnswer } from '../shared/normalize.js';
 import {
   cellKey,
   checkAnswer,
   findWinners,
   isRejectedByVotes,
   scoreRound,
-} from '../shared/scoring';
-import type { AnswerCell, Phase, RoomState, RoundView, Settings } from '../shared/types';
-import { pickLetter } from './letterPicker';
+} from '../shared/scoring.js';
+import type { AnswerCell, Phase, RoomState, RoundView, Settings } from '../shared/types.js';
+import { pickLetter } from './letterPicker.js';
 
 export interface Player {
   id: string;

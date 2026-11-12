@@ -4,20 +4,36 @@ import http from 'node:http';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { Server, type Socket } from 'socket.io';
-import type { CreatePayload, JoinAck, JoinPayload, RejoinPayload } from '../shared/types';
-import type { Player, Room } from './room';
-import { RoomManager } from './roomManager';
+import type { CreatePayload, JoinAck, JoinPayload, RejoinPayload } from '../shared/types.js';
+import type { Player, Room } from './room.js';
+import { RoomManager } from './roomManager.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 export interface AppOptions {
   /** დროების მასშტაბი — ტესტებისთვის */
   timeScale?: number;
+  /** მისამართის პრეფიქსი, რომლის ქვეშაც სერვერი დგას (Vercel-ზე: /api/server) */
+  pathPrefix?: string;
 }
 
 export function createApp(options: AppOptions = {}) {
   const app = express();
   const server = http.createServer(app);
+
+  // თუ მოთხოვნა პრეფიქსით მოდის, ვაშორებთ, რომ დანარჩენი კოდი ყველგან ერთნაირად მუშაობდეს.
+  // ეს listener-ები Socket.IO-ზე ადრე უნდა დარეგისტრირდეს.
+  const prefix = options.pathPrefix;
+  if (prefix) {
+    const strip = (req: http.IncomingMessage) => {
+      if (req.url === prefix) req.url = '/';
+      else if (req.url?.startsWith(`${prefix}/`) || req.url?.startsWith(`${prefix}?`))
+        req.url = req.url.slice(prefix.length) || '/';
+    };
+    server.prependListener('request', strip);
+    server.prependListener('upgrade', strip);
+  }
+
   const io = new Server(server, { maxHttpBufferSize: 100_000 });
   const manager = new RoomManager(
     (socketId, event, payload) => io.to(socketId).emit(event, payload),
@@ -79,7 +95,7 @@ export function createApp(options: AppOptions = {}) {
       on(event, (payload) => {
         const ctx = context();
         if (!ctx) return fail('ოთახთან კავშირი დაკარგულია');
-        fail(handler(ctx, payload) ?? null);
+        fail(handler(ctx, payload) || null);
       });
     /** მოქმედება, რომელიც მხოლოდ ჰოსტს შეუძლია */
     const hostOnly = (event: string, handler: (ctx: { room: Room; player: Player }, payload: any) => string | null | void) =>

@@ -2,7 +2,15 @@ import { useEffect, useState, useSyncExternalStore } from 'react';
 import { io } from 'socket.io-client';
 import type { CreatePayload, JoinAck, JoinPayload, RoomState } from '../../shared/types';
 
-export const socket = io({ transports: ['websocket', 'polling'] });
+/**
+ * Vercel-ზე სერვერი /api/server მისამართზე დგას და მხოლოდ WebSocket-ს იღებს;
+ * ყველგან სხვაგან ჩვეულებრივი /socket.io მისამართია (იხ. vite.config.ts).
+ */
+export const socket = io(
+  __ON_VERCEL__
+    ? { path: '/api/server/socket.io', transports: ['websocket'] }
+    : { transports: ['websocket', 'polling'] },
+);
 
 interface Store {
   state: RoomState | null;

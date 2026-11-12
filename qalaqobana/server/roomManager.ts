@@ -1,7 +1,7 @@
 import crypto from 'node:crypto';
-import { LIMITS, TIMING } from '../shared/config/gameDefaults';
-import { cleanDisplay } from '../shared/normalize';
-import { Room, type Emit } from './room';
+import { LIMITS, TIMING } from '../shared/config/gameDefaults.js';
+import { cleanDisplay } from '../shared/normalize.js';
+import { Room, type Emit } from './room.js';
 
 /** ადვილად წასაკითხი სიმბოლოები (0/O, 1/I/L-ის გარეშე) */
 const CODE_CHARS = 'ABCDEFGHJKMNPQRSTUVWXYZ23456789';

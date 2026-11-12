@@ -3,7 +3,7 @@
  * წესის შესაცვლელად საკმარისია POINTS-ის ან scoreRound-ის შეცვლა.
  * ფუნქციები "სუფთაა": არაფერზეა დამოკიდებული გარდა გადაცემული მონაცემებისა.
  */
-import { normalizeAnswer, startsWithLetter } from './normalize';
+import { normalizeAnswer, startsWithLetter } from './normalize.js';
 
 /** ქულების ოდენობა თითოეული შემთხვევისთვის */
 export const POINTS = {
