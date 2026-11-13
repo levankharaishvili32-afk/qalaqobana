@@ -205,7 +205,7 @@ async function main() {
       bots[4].send('round:stop', { answers: answersOf(4) });
       await until(() => bots.every((b) => b.state?.round?.stopBy === idOf(4)), 'სტოპ');
       const left = host.state!.phaseEndsAt! - host.state!.serverNow;
-      check(host.state!.phaseEndsAt! < endBefore && left <= 10_000 * TIME_SCALE + 5, '„სტოპ!" — დანარჩენებს 10 წამი დარჩათ');
+      check(host.state!.phaseEndsAt! < endBefore && left <= 5, '„სტოპ!" — წერა მაშინვე გაჩერდა ყველასთვის');
 
       await until(() => bots.every((b) => b.state?.phase === 'review'), 'შემოწმების ფაზა');
       // დაგვიანებული პასუხი

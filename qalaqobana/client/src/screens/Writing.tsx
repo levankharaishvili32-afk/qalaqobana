@@ -23,7 +23,11 @@ export function Writing({ state }: { state: RoomState }) {
     sounds.go();
   }, []);
   useEffect(() => {
-    if (round.stopBy) sounds.stop();
+    if (!round.stopBy) return;
+    sounds.stop();
+    // „სტოპ!"-ის შემდეგ წერა აღარ შეიძლება: რაც უკვე აკრეფილია, მაშინვე იგზავნება
+    clearTimeout(timer.current);
+    if (playing) send('round:draft', { answers: latest.current });
   }, [round.stopBy]);
   // ეკრანიდან გასვლისას ბოლო ცვლილებაც იგზავნება
   useEffect(
@@ -35,6 +39,7 @@ export function Writing({ state }: { state: RoomState }) {
 
   /** ყოველი ცვლილება სერვერზე ინახება — ტაიმერის ამოწურვისას პასუხები ავტომატურად ითვლება გაგზავნილად */
   const change = (catId: string, raw: string, allowLatin: boolean) => {
+    if (round.stopBy) return;
     const value = convert && !allowLatin ? latinToGeorgian(raw) : raw;
     const next = { ...latest.current, [catId]: value };
     latest.current = next;
@@ -100,6 +105,7 @@ export function Writing({ state }: { state: RoomState }) {
                       className={`field pr-10 ${filled ? (ok ? 'border-emerald-400' : 'border-rose-400') : ''}`}
                       value={value}
                       maxLength={LIMITS.answerMax}
+                      readOnly={!!round.stopBy}
                       onChange={(e) => change(c.id, e.target.value, !!c.allowLatin)}
                       placeholder={`${letter}…`}
                       autoFocus={i === 0}
@@ -144,7 +150,7 @@ export function Writing({ state }: { state: RoomState }) {
 
           <div className="sticky bottom-3">
             <button className="btn-danger w-full text-xl shadow-2xl" disabled={!allFilled || !!round.stopBy} onClick={stop}>
-              {caps(round.stopBy ? 'ბოლო წამები…' : allFilled ? '✋ სტოპ!' : 'შეავსე ყველა ველი')}
+              {caps(round.stopBy ? 'თამაში გაჩერდა' : allFilled ? '✋ სტოპ!' : 'შეავსე ყველა ველი')}
             </button>
           </div>
         </>

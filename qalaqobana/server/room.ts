@@ -394,14 +394,11 @@ export class Room {
     const draft = r.drafts[player.id];
     if (r.categories.some((c) => !normalizeAnswer(draft[c.id] ?? '')))
       return '„სტოპ!"-ისთვის ყველა ველი უნდა იყოს შევსებული';
+    // „სტოპ!" რაუნდს მაშინვე აჩერებს ყველასთვის. რჩება მხოლოდ წამის მეოთხედი,
+    // რომ სხვების უკვე აკრეფილმა (მაგრამ ჯერ გაუგზავნელმა) ასოებმა სერვერამდე მოაღწიოს.
     r.stopBy = player.id;
-    const newEnd = Date.now() + this.ms(TIMING.stopGraceMs);
-    if (this.phaseEndsAt === null || newEnd < this.phaseEndsAt) {
-      this.phaseEndsAt = newEnd;
-      this.setPhaseTimer(this.ms(TIMING.stopGraceMs) + this.ms(TIMING.submitGraceMs), () =>
-        this.startReview(),
-      );
-    }
+    this.phaseEndsAt = Date.now();
+    this.setPhaseTimer(this.ms(TIMING.submitGraceMs), () => this.startReview());
     for (const p of this.online()) this.emit(p.socketId!, 'round:stopCalled', { by: player.id });
     this.broadcast();
     return null;
